@@ -1,0 +1,19 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "overlay",
+  "description": "Reduced permissions for the active meeting overlay",
+  "windows": ["overlay"],
+  "permissions": [
+    "core:event:default",
+    "core:window:allow-close",
+    "core:window:allow-hide",
+    "core:window:allow-inner-position",
+    "core:window:allow-outer-position",
+    "core:window:allow-set-focus",
+    "core:window:allow-set-position",
+    "core:window:allow-start-dragging",
+    "core:window:allow-start-resize-dragging",
+    "core:window:allow-show",
+    "global-shortcut:allow-is-registered"
+  ]
+}

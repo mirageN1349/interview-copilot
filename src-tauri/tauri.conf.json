@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Interview Copilot",
+  "version": "0.1.0",
+  "identifier": "com.interviewcopilot.desktop",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Interview Copilot",
+        "width": 1120,
+        "height": 760,
+        "minWidth": 840,
+        "minHeight": 600,
+        "center": true
+      },
+      {
+        "label": "overlay",
+        "title": "Interview Copilot",
+        "url": "index.html#/overlay",
+        "width": 840,
+        "height": 420,
+        "minWidth": 560,
+        "minHeight": 280,
+        "visible": false,
+        "transparent": true,
+        "backgroundColor": [0, 0, 0, 0],
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "contentProtected": true,
+        "resizable": true,
+        "shadow": false
+      }
+    ],
+    "security": {
+      "capabilities": ["main", "overlay"],
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost ws://localhost:*; img-src 'self' asset: http://asset.localhost data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg"],
+    "icon": [],
+    "resources": ["fixtures/profile-sources/*"],
+    "macOS": {
+      "minimumSystemVersion": "15.0",
+      "infoPlist": "Info.plist"
+    }
+  }
+}

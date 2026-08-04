@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+coverage/
+target/
+src-tauri/target/
+src-tauri/gen/schemas/
+*.log
+.env*
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
+.omc/

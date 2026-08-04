@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <script>if (location.hash.startsWith('#/overlay')) document.documentElement.classList.add('overlay-window')</script>
+    <style>html.overlay-window,html.overlay-window body,html.overlay-window #app{background:transparent!important}</style>
+    <title>Interview Copilot</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/app/entrypoint/main.ts"></script>
+  </body>
+</html>

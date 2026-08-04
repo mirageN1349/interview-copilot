@@ -1,0 +1,36 @@
+.material-shell {
+  border: 1px solid color-mix(in oklch, var(--border) 82%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklch, var(--surface) 88%, transparent);
+  box-shadow: var(--shadow-dialog);
+}
+
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+:where(button, a, input, select, textarea) {
+  transition-duration: var(--motion-fast);
+  transition-property: background-color, border-color, box-shadow, color, opacity, transform;
+  transition-timing-function: var(--ease-out-expo);
+}
+
+:where(button:not(:disabled), a[href], [role="button"]):active {
+  transform: scale(0.975);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .material-shell {
+    background: var(--surface);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(*, *::before, *::after) {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

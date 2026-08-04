@@ -1,0 +1,42 @@
+[package]
+name = "interview-copilot"
+version = "0.1.0"
+description = "Interview Copilot desktop application"
+edition = "2024"
+
+[lib]
+name = "interview_copilot_lib"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.5.3", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.31", features = ["bundled"] }
+sha2 = "0.10"
+time = { version = "=0.3.44", features = ["formatting"] }
+tauri = { version = "2.11.0", features = ["macos-private-api"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-sql = { version = "2", features = ["sqlite"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+block2 = "0.6.2"
+dispatch2 = "0.3.1"
+objc2 = "0.6.4"
+objc2-app-kit = { version = "0.3.2", default-features = false, features = ["std", "NSColor", "NSView", "NSWindow", "NSWorkspace"] }
+objc2-application-services = { version = "0.3.2", default-features = false, features = ["std", "HIServices", "AXUIElement"] }
+objc2-av-foundation = { version = "0.3.2", default-features = false, features = ["std", "AVCaptureDevice", "AVMediaFormat", "block2"] }
+objc2-core-foundation = { version = "0.3.2", default-features = false, features = ["std", "CFDictionary", "CFNumber", "CFString"] }
+objc2-core-graphics = { version = "0.3.2", default-features = false, features = ["std", "CGWindow", "CGDirectDisplay", "CGError", "CGGeometry"] }
+objc2-core-audio-types = { version = "0.3.2", default-features = false, features = ["std"] }
+objc2-core-media = { version = "0.3.2", default-features = false, features = ["std", "CMBlockBuffer", "CMFormatDescription", "CMSampleBuffer", "objc2-core-audio-types"] }
+objc2-foundation = { version = "0.3.2", default-features = false, features = ["std", "NSString", "NSURL"] }
+objc2-quartz-core = { version = "0.3.2", default-features = false, features = ["std", "CALayer"] }
+objc2-screen-capture-kit = "0.3.2"
+window-vibrancy = "0.8"
+
+[profile.release]
+strip = false
