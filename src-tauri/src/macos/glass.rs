@@ -23,6 +23,9 @@ pub fn apply_material(
     if reduce_transparency {
         let _ = clear_liquid_glass(window);
         let _ = clear_vibrancy(window);
+        if window.label() == "overlay" {
+            super::windowing::clip_overlay_corners(window)?;
+        }
         return Ok(MaterialKind::Opaque);
     }
 
@@ -35,6 +38,9 @@ pub fn apply_material(
         LiquidGlassOptions::new(NSGlassEffectViewStyle::Clear).radius(22.0)
     };
     if apply_liquid_glass(window, liquid_glass).is_ok() {
+        if is_overlay {
+            super::windowing::clip_overlay_corners(window)?;
+        }
         return Ok(MaterialKind::LiquidGlass);
     }
 
@@ -49,6 +55,9 @@ pub fn apply_material(
         Some(22.0),
     )
     .map_err(|_| CommandError::new("MATERIAL_UNAVAILABLE", "Window material is unavailable"))?;
+    if window.label() == "overlay" {
+        super::windowing::clip_overlay_corners(window)?;
+    }
     Ok(MaterialKind::Vibrancy)
 }
 

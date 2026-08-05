@@ -104,8 +104,11 @@ describe('meeting overlay behavior', () => {
     expect(glass).toContain('NSVisualEffectMaterial::HudWindow')
     const windowing = readFileSync(resolve('src-tauri/src/macos/windowing.rs'), 'utf8')
     expect(windowing).toContain('native.setOpaque(false)')
+    expect(windowing).toContain('native.setHasShadow(false)')
     expect(windowing).toContain('native.setBackgroundColor(Some(&NSColor::clearColor()))')
+    expect(windowing).toContain('window.with_webview')
     expect(windowing).toContain('layer.setCornerRadius(22.0)')
+    expect(windowing).toContain('layer.setCornerCurve')
     expect(windowing).toContain('layer.setMasksToBounds(true)')
   })
 
