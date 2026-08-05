@@ -2,6 +2,16 @@
 
 Демонстрационное macOS-приложение на Vue 3 и Tauri 2. Авторизация, каталог моделей, распознавание и ответы работают через локальные mock-сценарии; внешнего AI-бэкенда и отправки писем нет.
 
+## Интерфейс
+
+### Главное окно
+
+![Главное окно Interview Copilot](docs/assets/interview-copilot-main.jpg)
+
+### Оверлей во время встречи
+
+![Оверлей Interview Copilot](docs/assets/interview-copilot-overlay.jpg)
+
 ## Требования
 
 - macOS 15+;
