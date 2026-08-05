@@ -8,6 +8,10 @@
 
 ![Главное окно Interview Copilot](docs/assets/interview-copilot-main.png)
 
+### Подготовка встречи
+
+![Подготовка новой встречи в Interview Copilot](docs/assets/interview-copilot-new-meeting.png)
+
 ### Оверлей во время встречи
 
 ![Оверлей Interview Copilot](docs/assets/interview-copilot-overlay.png)
