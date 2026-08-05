@@ -525,6 +525,11 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.overlay-window-root {
+  border-radius: 1.375rem;
+  clip-path: inset(0 round 1.375rem);
+}
+
 .overlay-panel {
   background: transparent;
 }

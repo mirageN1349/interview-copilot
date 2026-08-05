@@ -6,11 +6,11 @@
 
 ### Главное окно
 
-![Главное окно Interview Copilot](docs/assets/interview-copilot-main.jpg)
+![Главное окно Interview Copilot](docs/assets/interview-copilot-main.png)
 
 ### Оверлей во время встречи
 
-![Оверлей Interview Copilot](docs/assets/interview-copilot-overlay.jpg)
+![Оверлей Interview Copilot](docs/assets/interview-copilot-overlay.png)
 
 ## Требования
 

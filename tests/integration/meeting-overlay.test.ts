@@ -66,6 +66,7 @@ describe('meeting overlay behavior', () => {
     expect(shell).toContain('.overlay-content-enter-from')
     expect(shell).toContain('@media (prefers-reduced-motion: reduce)')
     expect(shell).toContain('class="overlay-chrome absolute inset-x-0 top-0')
+    expect(shell).toContain('clip-path: inset(0 round 1.375rem)')
     expect(shell).toContain('grid-rows-[1fr_auto]')
     expect(shell).toContain('backdrop-filter: blur(18px) saturate(135%)')
     expect(shell).not.toContain('.overlay-status,\n.overlay-segments')
