@@ -13,4 +13,6 @@ Thumbs.db
 *.swp
 .vscode/
 .idea/
+.agents/skills/
+.claude/skills/
 .omc/
