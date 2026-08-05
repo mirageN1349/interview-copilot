@@ -35,7 +35,12 @@ describe('sign-in page', () => {
     await flushPromises()
     expect(wrapper.get('h1').text()).toBe(en.auth.signIn.onboarding.steps.live.title)
 
-    await wrapper.findAll('.onboarding-dot')[3]!.trigger('click')
+    for (let step = 0; step < 2; step += 1) {
+      await wrapper.get('footer .ui-button[data-variant="primary"]').trigger('click')
+      await flushPromises()
+    }
+    expect(wrapper.find('input[type="email"]').exists()).toBe(true)
+
     await wrapper.get('input[type="email"]').setValue('USER@example.test')
     await wrapper.findAll('.onboarding-dot')[0]!.trigger('click')
     await wrapper.findAll('.onboarding-dot')[3]!.trigger('click')

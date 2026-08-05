@@ -26,6 +26,12 @@ describe('app navigation', () => {
     expect(wrapper.get('.app-brand').text()).toBe('Interview Copilot')
     expect(wrapper.get('.app-route-frame--nav').exists()).toBe(true)
     expect(wrapper.get('a[href="/meetings/new"]').classes()).toContain('app-navigation-link--active')
+
+    await router.push('/profiles')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.get('main').text()).toBe('Profiles')
+    expect(wrapper.findAll('main')).toHaveLength(1)
+    expect(wrapper.get('main').classes()).toContain('route-page-content')
     wrapper.unmount()
   })
 })

@@ -408,64 +408,61 @@ onBeforeUnmount(() => {
         </TabsRoot>
       </div>
 
-      <Transition
-        name="overlay-content"
-        mode="out-in"
+      <LiveChat
+        v-if="activeSection === 'live'"
+        key="live"
+        class="overlay-content-view"
+        :messages="view.messages.live"
+        :question="view.pendingQuestion"
+        :timeline="liveTimeline"
+        @confirm-question="view.pendingQuestion && sendUserMessage('live', view.pendingQuestion.text)"
+      />
+      <SideChat
+        v-else-if="activeSection === 'side'"
+        key="side"
+        class="overlay-content-view"
+        :messages="view.messages.side"
+        :timeline="sideTimeline"
+        @send="sendUserMessage('side', $event.content, $event.depth)"
+        @attach="hotkeyCapture('display')"
+      />
+      <section
+        v-else-if="activeSection === 'design'"
+        key="design"
+        class="overlay-content-view min-h-0 overflow-hidden px-4 pb-4 pt-[6.25rem]"
       >
-        <LiveChat
-          v-if="activeSection === 'live'"
-          key="live"
-          :messages="view.messages.live"
-          :question="view.pendingQuestion"
-          :timeline="liveTimeline"
-          @confirm-question="view.pendingQuestion && sendUserMessage('live', view.pendingQuestion.text)"
+        <DiagramEditor
+          :initial-diagram="diagram"
+          :proposal="diagramProposal"
+          @update:diagram="diagram = $event"
+          @proposal:accepted="diagramProposal = $event"
+          @proposal:rejected="diagramProposal = $event"
         />
-        <SideChat
-          v-else-if="activeSection === 'side'"
-          key="side"
-          :messages="view.messages.side"
-          :timeline="sideTimeline"
-          @send="sendUserMessage('side', $event.content, $event.depth)"
-          @attach="hotkeyCapture('display')"
+      </section>
+      <section
+        v-else
+        key="status"
+        class="overlay-content-view min-h-0 overflow-y-auto px-4 pb-4 pt-[6.25rem]"
+      >
+        <dl class="mb-4 grid content-start grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+          <dt class="text-(--muted-foreground)">
+            {{ t('overlay.status.profile') }}
+          </dt><dd>{{ meeting.data.value?.profileId ?? '—' }}</dd>
+          <dt class="text-(--muted-foreground)">
+            {{ t('overlay.status.connection') }}
+          </dt><dd>{{ t('overlay.status.online') }}</dd>
+          <dt class="text-(--muted-foreground)">
+            {{ t('overlay.status.context') }}
+          </dt><dd>{{ view.contextGeneration }}</dd>
+        </dl>
+        <CaptureContextControls
+          v-if="meeting.data.value"
+          :meeting-id="meeting.data.value.id"
+          :initial-display-id="meeting.data.value.displayId"
+          :thread="activeSection === 'side' ? 'side' : 'live'"
+          @captured="analyzeCapture"
         />
-        <section
-          v-else-if="activeSection === 'design'"
-          key="design"
-          class="min-h-0 overflow-hidden px-4 pb-4 pt-[6.25rem]"
-        >
-          <DiagramEditor
-            :initial-diagram="diagram"
-            :proposal="diagramProposal"
-            @update:diagram="diagram = $event"
-            @proposal:accepted="diagramProposal = $event"
-            @proposal:rejected="diagramProposal = $event"
-          />
-        </section>
-        <section
-          v-else
-          key="status"
-          class="min-h-0 overflow-y-auto px-4 pb-4 pt-[6.25rem]"
-        >
-          <dl class="mb-4 grid content-start grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
-            <dt class="text-(--muted-foreground)">
-              {{ t('overlay.status.profile') }}
-            </dt><dd>{{ meeting.data.value?.profileId ?? '—' }}</dd>
-            <dt class="text-(--muted-foreground)">
-              {{ t('overlay.status.connection') }}
-            </dt><dd>{{ t('overlay.status.online') }}</dd>
-            <dt class="text-(--muted-foreground)">
-              {{ t('overlay.status.context') }}
-            </dt><dd>{{ view.contextGeneration }}</dd>
-          </dl>
-          <CaptureContextControls
-            v-if="meeting.data.value"
-            :meeting-id="meeting.data.value.id"
-            :initial-display-id="meeting.data.value.displayId"
-            :thread="activeSection === 'side' ? 'side' : 'live'"
-            @captured="analyzeCapture"
-          />
-        </section>
-      </Transition>
+      </section>
 
       <footer class="overlay-footer relative z-20 flex items-center justify-between gap-3 px-3 py-2">
         <span class="truncate text-[0.6875rem] text-(--muted-foreground)">{{ t('overlay.commandHint') }}</span>
@@ -585,32 +582,18 @@ onBeforeUnmount(() => {
   content: "";
 }
 
-.overlay-content-enter-active,
-.overlay-content-leave-active {
-  transition: opacity 210ms cubic-bezier(0.22, 1, 0.36, 1), transform 210ms cubic-bezier(0.22, 1, 0.36, 1);
-}
+.overlay-content-view { animation: overlay-content-enter 210ms cubic-bezier(0.22, 1, 0.36, 1); }
 
-.overlay-content-enter-from {
-  opacity: 0;
-  transform: translate3d(12px, 0, 0);
-}
-
-.overlay-content-leave-to {
-  opacity: 0;
-  transform: translate3d(-10px, 0, 0);
+@keyframes overlay-content-enter {
+  from { opacity: 0; transform: translate3d(12px, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .overlay-segment-indicator,
-  .overlay-content-enter-active,
-  .overlay-content-leave-active {
+  .overlay-segment-indicator {
     transition: none;
   }
 
-  .overlay-content-enter-from,
-  .overlay-content-leave-to {
-    transform: none;
-  }
+  .overlay-content-view { animation: none; }
 }
 
 @media (prefers-reduced-transparency: reduce) {

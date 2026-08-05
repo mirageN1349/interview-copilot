@@ -67,15 +67,11 @@ const accountLink = { to: '/account', key: 'navigation.account', icon: CircleUse
   </nav>
   <div :class="{ 'app-route-frame--nav': showNavigation }">
     <RouterView v-slot="{ Component, route: currentRoute }">
-      <Transition
-        name="route-page"
-        mode="out-in"
-      >
-        <component
-          :is="Component"
-          :key="currentRoute.path"
-        />
-      </Transition>
+      <component
+        :is="Component"
+        :key="currentRoute.path"
+        class="route-page-content"
+      />
     </RouterView>
   </div>
 </template>
@@ -110,21 +106,10 @@ const accountLink = { to: '/account', key: 'navigation.account', icon: CircleUse
   padding-top: 5.75rem;
 }
 
-.route-page-enter-active,
-.route-page-leave-active {
-  transition:
-    opacity var(--motion-medium) var(--ease-out-expo),
-    transform var(--motion-medium) var(--ease-out-expo);
-}
+.route-page-content { animation: route-page-enter var(--motion-medium) var(--ease-out-expo); }
 
-.route-page-enter-from {
-  opacity: 0;
-  transform: translateY(0.25rem);
-}
-
-.route-page-leave-to {
-  opacity: 0;
-  transform: translateY(-0.125rem);
+@keyframes route-page-enter {
+  from { opacity: 0; transform: translateY(0.25rem); }
 }
 
 @media (max-width: 44rem) {
@@ -149,9 +134,6 @@ const accountLink = { to: '/account', key: 'navigation.account', icon: CircleUse
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .route-page-enter-from,
-  .route-page-leave-to {
-    transform: none;
-  }
+  .route-page-content { animation: none; }
 }
 </style>

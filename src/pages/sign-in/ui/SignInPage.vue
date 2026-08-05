@@ -67,15 +67,11 @@ async function submit() {
       </header>
 
       <div class="flex flex-1 items-center px-5 py-6 sm:px-8 lg:px-14">
-        <Transition
-          name="onboarding-step"
-          mode="out-in"
+        <article
+          v-if="!isFinalStep"
+          :key="currentStep"
+          class="onboarding-content grid w-full items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20"
         >
-          <article
-            v-if="!isFinalStep"
-            :key="currentStep"
-            class="grid w-full items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20"
-          >
             <div class="max-w-xl">
               <component
                 :is="steps[currentStep]!.icon"
@@ -165,13 +161,13 @@ async function submit() {
                 </div>
               </div>
             </div>
-          </article>
+        </article>
 
-          <article
-            v-else
-            key="sign-in"
-            class="grid w-full items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20"
-          >
+        <article
+          v-else
+          key="sign-in"
+          class="onboarding-content grid w-full items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20"
+        >
             <div class="max-w-xl">
               <LockKeyhole
                 :size="24"
@@ -239,8 +235,7 @@ async function submit() {
                 {{ t('auth.signIn.privacy') }}
               </p>
             </form>
-          </article>
-        </Transition>
+        </article>
       </div>
 
       <footer class="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-4 sm:px-8 sm:py-6">
@@ -418,10 +413,11 @@ async function submit() {
   opacity: 1;
 }
 
-.onboarding-step-enter-active,
-.onboarding-step-leave-active { transition: opacity var(--motion-medium) var(--ease-out-expo), transform var(--motion-medium) var(--ease-out-expo); }
-.onboarding-step-enter-from { opacity: 0; transform: translateX(0.75rem); }
-.onboarding-step-leave-to { opacity: 0; transform: translateX(-0.5rem); }
+.onboarding-content { animation: onboarding-enter var(--motion-medium) var(--ease-out-expo); }
+
+@keyframes onboarding-enter {
+  from { opacity: 0; transform: translateX(0.75rem); }
+}
 
 @keyframes onboarding-gradient {
   0% { background-position: 0% 20%; }
@@ -436,7 +432,6 @@ async function submit() {
 
 @media (prefers-reduced-motion: reduce) {
   .onboarding-page { animation: none; background-position: 50% 50%; }
-  .onboarding-step-enter-from,
-  .onboarding-step-leave-to { transform: none; }
+  .onboarding-content { animation: none; }
 }
 </style>
